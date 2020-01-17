@@ -42,7 +42,7 @@ def comp_light(img, mask):
 
   ## 2. Find the center and radius of the sphere from the mask
   ret, thresh = cv2.threshold(mask, 127, 255, 0)
-  contours, hierarchy = cv2.findContours(thresh, 1, 2)
+  contours, hierarchy = cv2.findContours(thresh, 1, 2)[-2:]
   cnt = contours[0]
   (cx, cy), cr = cv2.minEnclosingCircle(cnt)
   # C[0] = cx
@@ -55,7 +55,7 @@ def comp_light(img, mask):
   ## 3. Compute a weighted average of the brightest pixel locations.
   img[mask < 0.9*255] = 0
   ret, thresh = cv2.threshold(img, 250, 255, 0)
-  contours, hierarchy = cv2.findContours(thresh, 1, 2)
+  contours, hierarchy = cv2.findContours(thresh, 1, 2)[-2:]
   cnt = contours[0]
   M = cv2.moments(cnt)
   hx = M['m10']/M['m00']
